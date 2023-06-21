@@ -1,0 +1,57 @@
+.result-wrapper {
+  width: 900px;
+  text-align: left;
+  overflow-y: hidden;
+}
+.result-wrapper .song {
+  display: flex;
+  height: 45px;
+  line-height: 45px;
+  font-size: 14px;
+  color: gray;
+  border: 1px solid transparent;
+}
+.result-wrapper .song:nth-child(2n) {
+  background-color: #f7f7f7;
+}
+
+.result-wrapper .song:hover{
+  background-color: #f2f2f2;
+  border-color: #e1e1e1;
+}
+.result-wrapper .song .name {
+  width: 350px;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+}
+.result-wrapper .song .name span {
+  cursor: pointer;
+}
+.result-wrapper .song .name a {
+  cursor: pointer;
+  margin: 0 10px;
+}
+.result-wrapper .song .singer {
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.result-wrapper .song .album {
+  width: 250px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.result-wrapper .song .time {
+  flex: 1;
+}
+.result-wrapper .song .icon-editmedia{
+  color:#b50b0c;
+  padding: 5px ;
+  
+}
+.mv-play {
+    font-size: 28px;
+}
