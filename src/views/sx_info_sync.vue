@@ -6,18 +6,25 @@
             <label for="inputSuccess">
                 实施编码：
             </label>
-            <input  style=" width: 40%; border-radius: 16px; text-indent: 12px; margin-right: 4px;" type="text" v-model="parameter.implementCode"  maxlength="31" placeholder="请输入实施编码"/>
-            <button  style=" width: 10%; border-radius: 16px;" type="submit">提交</button>
+            <input  style=" width: 40%; border-radius: 16px; text-indent: 12px; margin-right: 4px;" type="text" v-model="parameter.implementCode"  maxlength="31" placeholder="请输入实施编码">
+            <button class="todo-button" style=" width: 10%; border-radius: 16px;" type="submit">提交</button>
         </form>
 
         <!--  返回结果渲染  -->
         <div v-show="isShow">
             <h2  class="todo-title"  style="font-size: 18px; color: #096dd9; margin: 20px auto;">同步状态信息:</h2>
             <ul class="todo-box">
-                <li class="todo"><p style="font-size: 12px; color: #096dd9;">事项基本信息：</p>{{sxjbxx}}</li>
-                <li class="todo"><p style="font-size: 12px; color: #096dd9;">扩展信息：</p>{{kzxx}}</li>
-                <li class="todo"><p style="font-size: 12px; color: #096dd9;">材料信息：</p>{{clxx}}</li>
-                <li class="todo"><p style="font-size: 12px; color: #096dd9;">环节信息：</p>{{hjxx}}</li>
+                <li class="todo" v-for="(val, key) in listData" :key="key">
+                    <span style="font-size: 12px; color: #096dd9;">{{key}}：</span> <br>
+                    <span>{{val}}</span>
+                </li>
+
+
+
+<!--                <li class="todo"><p style="font-size: 12px; color: #096dd9;">扩展信息：</p>{{kzxx}}</li>-->
+<!--                <li class="todo"><p style="font-size: 12px; color: #096dd9;">材料信息：</p>{{clxx}}</li>-->
+<!--                <li class="todo"><p style="font-size: 12px; color: #096dd9;">环节信息：</p>{{hjxx}}</li>-->
+
             </ul>
         </div>
     </div>
@@ -42,9 +49,9 @@ export default  {
     methods: {
         // 提交表单事件
         submitForm() {
-            if (this.parameter.implementCode === '') {
-                alert('请输入实施编码!');
-            } else {
+            // if (this.parameter.implementCode === '') {
+            //     alert('请输入实施编码!');
+            // } else {
                 let url = "/dd/sx/repair";
                 this.$axios.get(
                     '/api' + url, {params: this.parameter}
@@ -52,20 +59,21 @@ export default  {
                     response => {
                         // 将接口返回值赋值给listData进行渲染
                         this.listData = response.data
-                        if (this.listData == '基本信息数据为空') {
-                            alert('未查询到该事项，请核对实施编码是否正确!');
-                        } else {
-                            this.listData = response.data
+                        // if (this.listData == '基本信息数据为空') {
+                        //     alert('未查询到该事项，请核对实施编码是否正确!');
+                        // } else {
+                        //     this.listData = response.data
                             this.sxjbxx = this.listData['事项基本信息']
                             this.kzxx = this.listData['扩展信息']
                             this.clxx = this.listData['材料信息']
                             this.hjxx = this.listData['环节信息']
                             this.isShow = true //显示数据
-                        }
+                        // }
                         // 日志打印
+                        // this.jsondata = JSON.stringify(this.listData);  // 转JSON
                         console.log(this.listData);
                         // 打印数据类型
-                        console.log(typeof(this.listData));
+                        // console.log(typeof(this.listData));
                     }
                 ).catch(
                     error => {
@@ -74,7 +82,7 @@ export default  {
                 )
                 // 将输入框置空
                 this.parameter.implementCode = ''
-            }
+            // }
         },
     }
 }
@@ -139,5 +147,13 @@ export default  {
             //text-indent: 34px;
         }
     }
+}
+
+// 按钮悬停颜色
+.todo-button:hover,
+.server-table i.el-tooltip:hover {
+    cursor: pointer; //鼠标变手
+    color: #ffffff; //文字变颜色
+    background-color: #399777; //背景变颜色
 }
 </style>

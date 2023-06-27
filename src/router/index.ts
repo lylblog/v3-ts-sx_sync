@@ -7,6 +7,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         redirect: '/sx_info_sync'
     },
+
     // 事项同步
     {
         path: '/sx_info_sync',
@@ -18,6 +19,12 @@ const routes: Array<RouteRecordRaw> = [
         path: '/count',
         name: 'count',
         component: MyCount
+    },
+    // 图片轮播路由
+    {
+        path: '/imageshow',
+        name: 'imageshow',
+        component: () => import('../views/ImageShow.vue')
     },
     // 图片轮播路由
     {

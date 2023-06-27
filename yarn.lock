@@ -1729,12 +1729,27 @@
     "estree-walker" "^2.0.2"
     "magic-string" "^0.25.7"
 
+"@vue/reactivity@^3.3.4", "@vue/reactivity@3.3.4":
+  "integrity" "sha512-kLTDLwd0B1jG08NBF3R5rqULtv/f8x3rOFByTDz4J53ttIQEDmALqKqXY0J+XQeN0aV2FBxY8nJDf88yvOPAqQ=="
+  "resolved" "https://registry.npmmirror.com/@vue/reactivity/-/reactivity-3.3.4.tgz"
+  "version" "3.3.4"
+  dependencies:
+    "@vue/shared" "3.3.4"
+
 "@vue/reactivity@3.2.37":
   "integrity" "sha512-/7WRafBOshOc6m3F7plwzPeCu/RCVv9uMpOwa/5PiY1Zz+WLVRWiy0MYKwmg19KBdGtFWsmZ4cD+LOdVPcs52A=="
   "resolved" "https://registry.npmmirror.com/@vue/reactivity/-/reactivity-3.2.37.tgz"
   "version" "3.2.37"
   dependencies:
     "@vue/shared" "3.2.37"
+
+"@vue/runtime-core@^3.3.4":
+  "integrity" "sha512-R+bqxMN6pWO7zGI4OMlmvePOdP2c93GsHFM/siJI7O2nxFRzj55pLwkpCedEY+bTMgp5miZ8CxfIZo3S+gFqvA=="
+  "resolved" "https://registry.npmmirror.com/@vue/runtime-core/-/runtime-core-3.3.4.tgz"
+  "version" "3.3.4"
+  dependencies:
+    "@vue/reactivity" "3.3.4"
+    "@vue/shared" "3.3.4"
 
 "@vue/runtime-core@3.2.37":
   "integrity" "sha512-JPcd9kFyEdXLl/i0ClS7lwgcs0QpUAWj+SKX2ZC3ANKi1U4DOtiEr6cRqFXsPwY5u1L9fAjkinIdB8Rz3FoYNQ=="
@@ -1765,6 +1780,11 @@
   "integrity" "sha512-4rSJemR2NQIo9Klm1vabqWjD8rs/ZaJSzMxkMNeJS6lHiUjjUeYFbooN19NgFjztubEKh3WlZUeOLVdbbUWHsw=="
   "resolved" "https://registry.npmmirror.com/@vue/shared/-/shared-3.2.37.tgz"
   "version" "3.2.37"
+
+"@vue/shared@3.3.4":
+  "integrity" "sha512-7OjdcV8vQ74eiz1TZLzZP4JwqM5fA94K6yntPS5Z25r9HDuGNzaGdgvwKYq6S+MxwF0TFRwe50fIR/MYnakdkQ=="
+  "resolved" "https://registry.npmmirror.com/@vue/shared/-/shared-3.3.4.tgz"
+  "version" "3.3.4"
 
 "@vue/vue-loader-v15@npm:vue-loader@^15.9.7":
   "integrity" "sha512-VU6tuO8eKajrFeBzMssFUP9SvakEeeSi1BxdTH5o3+1yUyrldp8IERkSdXlMI2t4kxF2sqYUDsQY+WJBxzBmZg=="

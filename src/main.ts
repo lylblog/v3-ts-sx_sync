@@ -10,7 +10,6 @@ import axios from "axios";
 
 const app = createApp(App)
 app.config.globalProperties.$axios = axios
-
 // app.use(VueAxios, axios).mount('#app')
 
 app.use(store)
