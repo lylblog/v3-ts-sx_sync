@@ -49,9 +49,9 @@ export default  {
     methods: {
         // 提交表单事件
         submitForm() {
-            // if (this.parameter.implementCode === '') {
-            //     alert('请输入实施编码!');
-            // } else {
+            if (this.parameter.implementCode === '') {
+                alert('请输入实施编码!');
+            } else {
                 let url = "/dd/sx/repair";
                 this.$axios.get(
                     '/api' + url, {params: this.parameter}
@@ -59,16 +59,16 @@ export default  {
                     response => {
                         // 将接口返回值赋值给listData进行渲染
                         this.listData = response.data
-                        // if (this.listData == '基本信息数据为空') {
-                        //     alert('未查询到该事项，请核对实施编码是否正确!');
-                        // } else {
+                        if (this.listData == '基本信息数据为空') {
+                            alert('未查询到该事项，请核对实施编码是否正确!');
+                        } else {
                         //     this.listData = response.data
                             this.sxjbxx = this.listData['事项基本信息']
                             this.kzxx = this.listData['扩展信息']
                             this.clxx = this.listData['材料信息']
                             this.hjxx = this.listData['环节信息']
                             this.isShow = true //显示数据
-                        // }
+                        }
                         // 日志打印
                         // this.jsondata = JSON.stringify(this.listData);  // 转JSON
                         console.log(this.listData);
@@ -82,7 +82,7 @@ export default  {
                 )
                 // 将输入框置空
                 this.parameter.implementCode = ''
-            // }
+            }
         },
     }
 }
