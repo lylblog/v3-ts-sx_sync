@@ -1,5 +1,8 @@
 <template>
-  <nav>
+  <nav v-show="isShow">
+    <!-- 路由导航-->
+    <router-link to="/login">登录</router-link>
+    <router-link to="/login_new">登录_新</router-link>
     <router-link to="/sx_info_sync">事项同步</router-link>
     <router-link to="/count">计数器</router-link>
     <router-link to="/imageshow">图片切换</router-link>
@@ -12,9 +15,35 @@
     <router-link to="/blackmusic">云听播放器</router-link>
   </nav>
   <div class="container">
-    <router-view />
+    <!-- 路由出口 -->
+    <!-- 路由匹配到的组件将渲染在这里 -->
+<!--    <router-view />-->
+      <router-view></router-view>
   </div>
 </template>
+
+
+<script>
+export default {
+    data(){
+        return{
+            isShow:false
+        }
+    },
+    watch:{
+        $route(to){
+            // console.log(to.path);
+            if(to.path === '/' || to.path === '/login' || to.path === '/login_new'){
+                this.isShow=false;
+            }
+            else{
+                this.isShow=true;
+            }
+        }
+    }
+
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -68,8 +97,10 @@ nav {
 }
 
 .container {
-  width: 60vw;
+  width: 100%;
+  //width: 60vw;
   height: 70vh;
+
   // background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
   margin: 0 auto;
   border: 1px solid #fff;

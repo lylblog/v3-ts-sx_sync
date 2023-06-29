@@ -96,7 +96,7 @@ export default  {
 // }
 
 #todo-list {
-    width: 80%;
+    width: 50%;
     min-height: 100%;
     margin: 0 auto;
     // text-align: left;

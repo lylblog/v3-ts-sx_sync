@@ -41,6 +41,7 @@ const next = () => {
   width: 60vw;
   height: 80vh;
   overflow: hidden;
+  margin: auto;
 
   .change {
     width: 100%;
