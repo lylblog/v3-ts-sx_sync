@@ -12,6 +12,8 @@ import axios from "axios";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 
+
+
 // 引入mock
 import '@/mock/mock'
 
@@ -25,3 +27,4 @@ app.use(store)
     .use(ElementPlus)
     // .use(VueAxios)
     .mount('#app')
+

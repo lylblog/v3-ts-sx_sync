@@ -95,6 +95,7 @@ export default defineComponent ({
                             let status = res.data.status
                             // console.log("tstatus值：",status);
                             if (status === 200) {
+                                localStorage.setItem("token",res.data.tData.token)
                                 router.push({path:'/sx_info_sync'});
                                 // console.log("登录成功，token值：", token);
                             } else {

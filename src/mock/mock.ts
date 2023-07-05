@@ -13,6 +13,7 @@ Mock.mock('/login', 'post', (params) => {
     if(loginData.username=='admin' && loginData.password=='123456'){
         data = Mock.mock({
             "token": "@id",  // 随机生成18位数，模拟身份证号  获取生成token值
+            "username": loginData.username
             })
         // console.log(data)
         return {

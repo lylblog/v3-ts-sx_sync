@@ -1,6 +1,6 @@
 <template>
   <div class="ImageShow">
-    <div class="img" ref="imgDom"><img :src="imgList[index]"></div>
+    <div class="img" ref="imgDom"><img :src="imgList[index]" alt="说明文字"></div>
     <div class="change">
       <div class="pre" @click="pre">上一个</div>
       <div class="next" @click="next">下一个</div>

@@ -8,9 +8,16 @@
                 <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
             </el-form-item>
             <el-form-item>
-                <el-button class="submitBtn" type="primary" @click="$event => Login()">登录</el-button>
-                <el-button class="submitBtn" @click="$event => resetForm()">重置</el-button>
+                <el-button  type="primary" @click="$event => Login()">登录</el-button>
+                <el-button  @click="$event => resetForm()">重置</el-button>
             </el-form-item>
+            <div class="unlogin">
+                <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
+                |
+                <router-link :to="{ path: '/register' }">
+                    <a href="register.vue" target="_blank" align="right">注册新账号</a>
+                </router-link>
+            </div>
         </el-form>
     </div>
 </template>
@@ -26,6 +33,7 @@ import axios from "axios";
 
 
 export default defineComponent ({
+    name: 'HelloWorld',
     setup() {
         // 表单数据
         let ruleForm = reactive({
@@ -89,15 +97,14 @@ export default defineComponent ({
                             password: ruleForm.password,
                         })
                         .then((res) => {
-                            // console.log(res.data);
-                            let token = res.data.tData.token;
-                            // console.log("token值：",token);
+                            console.log(res.data);
+                            let username = res.data.tData.username;
+                            console.log("username：",username);
                             let status = res.data.status
-                            // console.log("tstatus值：",status);
                             if (status === 200) {
-                                localStorage.setItem("token",res.data.tData.token)
+                                sessionStorage.setItem("username",res.data.tData.username)
+                                sessionStorage.setItem("token",res.data.tData.token)
                                 router.push({path:'/sx_info_sync'});
-                                // console.log("登录成功，token值：", token);
                             } else {
                                 // 调用重置表单函数
                                 resetForm()
@@ -117,6 +124,8 @@ export default defineComponent ({
 
     },
 });
+
+
 </script>
 
 <style>
