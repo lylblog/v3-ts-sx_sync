@@ -1,11 +1,13 @@
 // 1. 引入这两个函数来初始化路由
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
+import {createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw} from 'vue-router'
 import MyCount from '../views/CountPage.vue'
-import component from "*.vue";
 // 2. 配置路由
 const routes: Array<RouteRecordRaw> = [
 
-    // 首页
+
+
+
+
 
 
 
@@ -195,7 +197,8 @@ const routes: Array<RouteRecordRaw> = [
 
 // 创建路由实例
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),  // 表示使用hash模式，即url会有#前缀
+    // history: createWebHashHistory(), // createWebHashHistory  表示使用hash模式，即url会有#前缀
+    history: createWebHistory(process.env.BASE_URL),  // createWebHistory路由模式路径不带#号(生产环境下不能直接访问项目，需要nginx转发)
     routes
 })
 
@@ -205,8 +208,6 @@ router.beforeEach((to, from, next) => {
     // from 在哪个路由进入的
     // next 放行
     if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
-        // let locatoken = sessionStorage.getItem('token')
-        // console.log(locatoken)
         if(sessionStorage.getItem('token')){ //判断本地是否存在token
             next();
         }else {

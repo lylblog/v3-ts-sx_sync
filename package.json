@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
     "@types/mockjs": "^1.0.7",
     "@vue/reactivity": "^3.3.4",
     "@vue/runtime-core": "^3.3.4",
