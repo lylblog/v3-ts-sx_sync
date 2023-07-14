@@ -1,8 +1,9 @@
 <template>
     <div class="not_found">
+            <h1>404 天呐！出错了 ~<br><br>您好像去了一个不存在的地方！ (灬ꈍ ꈍ灬)</h1>
         <p>
             页面将在<span>{{ time }}</span>秒后自动跳转首页，<br>
-            您也可以点击这里跳转<a href="/sx_info_sync">首页</a>
+            您也可以点击这里跳转<a href="/home">首页</a>
         </p>
     </div>
 </template>
@@ -34,7 +35,7 @@ export default {
                 if (_t !== 0) {
                     this.time = _t--;
                 } else {
-                    this.$router.replace('/sx_info_sync')
+                    this.$router.replace('/home')
                     clearTimeout(this.time_end)
                     this.time_end = null
                 }
@@ -65,7 +66,8 @@ export default {
 <style scoped lang='less'>
 .not_found {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  //height: 100%;
   background: url('../assets/images/bg.jpg') no-repeat;
   background-position: center;
   background-size: cover;

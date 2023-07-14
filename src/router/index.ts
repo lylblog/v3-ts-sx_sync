@@ -3,185 +3,214 @@ import {createRouter, createWebHistory, createWebHashHistory, RouteRecordRaw} fr
 import MyCount from '../views/CountPage.vue'
 // 2. 配置路由
 const routes: Array<RouteRecordRaw> = [
-
-
-
-
-
-
-
-
-
-    // 默认路由
+    // login
     {
-        path: '/',
-        // ↓重定向
-        redirect: '/login_new'
-        // redirect: { name: 'home' },
-    },
-    // login_new
-    {
-        path: '/login_new',
-        name: 'login_new',
-        component: () => import('../views/login_new.vue'),
+        path: "/login",
+        name: "登录",
+        component: () => import('../views/login.vue'),
         meta: {
             isShow: false,
         },
     },
-    // logout
     {
-        path: '/logout',
-        name: 'logout',
-        component: () => import('../views/logout.vue'),
-        // 路由元信息，随你怎么定义，笔者一般采用这种方式来定义路由权限然后结合路由拦截，
-        // 下面的 auth：true 表示需要授权登录才可以进入此页面。
-        meta: {
-            requireAuth: true,
-            isShow: false,
-        },
-    },
-
-    // // login  未使用
-    // {
-    //     path: '/login',
-    //     name: 'login',
-    //     component: () => import('../views/login.vue'),
-    //     // 路由元信息，随你怎么定义，笔者一般采用这种方式来定义路由权限然后结合路由拦截，
-    //     // 下面的 auth：true 表示需要授权登录才可以进入此页面。
-    //     meta: {
-    //         requireAuth: true,
-    //     },
-    // },
-
-    // 事项同步
-    {
-        path: '/sx_info_sync',
-        name: 'sx_info_sync',
-        component: () => import('../views/sx_info_sync.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-
-    // 计数器路由
-    {
-        path: '/count',
-        name: 'count',
-        component: MyCount,
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 图片轮播路由
-    {
-        path: '/imageshow',
-        name: 'imageshow',
-        component: () => import('../views/ImageShow.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 图片轮播路由
-    {
-        path: '/imageshow',
-        name: 'imageshow',
-        component: () => import('../views/ImageShow.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // todoList路由
-    {
-        path: '/todo',
-        name: 'todo',
-        component: () => import('../views/TodoList.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 天气查查查路由
-    {
-        path: '/weather',
-        name: 'weacher',
-        component: () => import('../views/WeatherPage.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 知心姐姐聊天
-    {
-        path: '/chat',
-        name: 'chat',
-        component: () => import('../views/ChatPage.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 手机品牌管理
-    {
-        path: '/phone',
-        name: 'phone',
-        component: () => import('../views/PhonePage.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 天知道天气查看
-    {
-        path: '/weathernew',
-        name: 'weahernew',
-        component: () => import('../views/WeatherNew.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 悦听音乐播放器
-    {
-        path: '/musicplayer',
-        name: 'musicplayer',
-        component: () => import('../views/MusicPlayer.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-    },
-    // 黑云音乐播放器
-    {
-        path: '/blackmusic',
-        name: 'blackmusic',
-        component: () => import('../views/MyPlayer/IndexPage.vue'),
-        meta: {
-            requireAuth: true,
-            isShow: true,
-        },
-        // ↓子路由
+        path: '',
+        component: () => import('../layout/layout.vue'),
+        redirect: "/home",
         children: [
+            {
+                path: '/home',
+                name: '首页',
+                component: () => import('../layout/home.vue'),
+            },
+            {
+                path: "/content",
+                name: "政务",
+                // icon: "Tickets",
+                // component: rightView,
+                children: [
+                    // 事项同步
+                    {
+                        path: '/sx_info_sync',
+                        name: '事项同步',
+                        component: () => import('../views/sx_info_sync.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                ]
+            },
+            {
+                path: "/operation",
+                name: "运营",
+                // icon: "DataLine",
+                // component: rightView,
+                children: [
+                    // 计数器路由
+                    {
+                        path: '/count',
+                        name: '计数器',
+                        component: MyCount,
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // 图片轮播路由
+                    {
+                        path: '/imageshow',
+                        name: '图片轮播',
+                        component: () => import('../views/ImageShow.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // todoList记事本路由
+                    {
+                        path: '/todo',
+                        name: '记事本',
+                        component: () => import('../views/TodoList.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // 天气查查查路由
+                    {
+                        path: '/weather',
+                        name: '天气查查查',
+                        component: () => import('../views/WeatherPage.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // 知心姐姐聊天
+                    {
+                        path: '/chat',
+                        name: '知心姐姐聊天',
+                        component: () => import('../views/ChatPage.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // 手机品牌管理
+                    {
+                        path: '/phone',
+                        name: '手机品牌管理',
+                        component: () => import('../views/PhonePage.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // 天知道天气查看
+                    {
+                        path: '/weathernew',
+                        name: '天知道天气查看',
+                        component: () => import('../views/WeatherNew.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // 悦听音乐播放器
+                    {
+                        path: '/musicplayer',
+                        name: '悦听音乐播放器',
+                        component: () => import('../views/MusicPlayer.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                    },
+                    // 黑云音乐播放器
+                    {
+                        path: '/blackmusic',
+                        name: '黑云音乐播放器',
+                        component: () => import('../views/MyPlayer/IndexPage.vue'),
+                        meta: {
+                            requireAuth: true,
+                            isShow: true,
+                        },
+                        // ↓子路由
+                        children: [
 
-            {
-                path: 'result/:search?',
-                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/ResultPage.vue')
+                            {
+                                path: 'result/:search?',
+                                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/ResultPage.vue')
+                            },
+                            {
+                                path: 'player/:id?',
+                                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/PlayerPage.vue')
+                            },
+                            {
+                                path: 'video/:mvid?',
+                                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/VideoPage.vue')
+                            },
+                            {
+                                path: 'comment/:id?',
+                                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/CommentPage.vue')
+                            }
+                        ]
+                    },
+
+                ]
             },
-            {
-                path: 'player/:id?',
-                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/PlayerPage.vue')
-            },
-            {
-                path: 'video/:mvid?',
-                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/VideoPage.vue')
-            },
-            {
-                path: 'comment/:id?',
-                component: () => import(/* webpackChunkName: "myplayer" */ '../views/MyPlayer/CommentPage.vue')
-            }
+            // {
+            //     path: "/user",
+            //     name: "用户",
+            //     // icon: "User",
+            //     component: () => import('../layout/user.vue'),
+            //     children: [
+            //         {
+            //             path: "list",
+            //             name: "用户列表",
+            //             icon: "UserFilled",
+            //             component: userList
+            //         },
+            //         {
+            //             path: "reset-password",
+            //             name: "密码重置",
+            //             icon: "Lock",
+            //             component: adminResetPwd
+            //         },
+            //         {
+            //             path: "email",
+            //             name: "邮箱重置",
+            //             icon: "Promotion",
+            //             component: adminEmail
+            //         },
+            //         {
+            //             path: "info",
+            //             name: "信息重置",
+            //             icon: "InfoFilled",
+            //             component: adminInfo
+            //         }
+            //     ]
+            // },
+            // {
+            //     path: "/settings",
+            //     name: "设置",
+            //     icon: "Setting",
+            //     component: rightView,
+            //     children: [
+            //         {
+            //             path: "website-info",
+            //             name: "站点信息",
+            //             icon: "CreditCard",
+            //             component: websiteInfo
+            //         },
+            //         {
+            //             path: "friend-link",
+            //             name: "友情链接",
+            //             icon: "Link",
+            //             component: friendLink
+            //         }
+            //     ]
+            // }
         ]
     },
     // 404
@@ -191,8 +220,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             isShow: false,
         },
-    }
-
+    },
 ]
 
 // 创建路由实例
@@ -211,14 +239,15 @@ router.beforeEach((to, from, next) => {
         if(sessionStorage.getItem('token')){ //判断本地是否存在token
             next();
         }else {
-            if(to.path === '/login_new'){
-                next();
-            }else {
+            // if(to.path === '/login_new'){
+            //     next();
+            // }else {
                 alert('请先进行登录！')
                 next({
-                    path:'/login_new'
+                    path:'/login_new',
+                    query: {redirect: to.fullPath}
                 })
-            }
+            // }
         }
     }
     else {

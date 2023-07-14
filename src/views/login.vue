@@ -1,109 +1,143 @@
 <template>
-    <div id="building" class="login">
-        <div class="mylogin" align="center">
-            <h4 style="color: white;">登录</h4>
-            <el-form  :model="loginForm"  :rules="loginRules" ref="loginForm" label-width="0px">
-                <el-form-item label="" prop="account" style="margin-top: 10px">
-                    <el-row>
-                        <el-col :span="2">
-                            <span class="el-icon-s-custom"></span>
-                        </el-col>
-                        <el-col :span="22">
-                            <el-input
-                                    class="inps"
-                                    placeholder="账号"
-                                    v-model="loginForm.account"
-                            >
-                            </el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-                <el-form-item label="" prop="passWord">
-                    <el-row>
-                        <el-col :span="2">
-                            <span class="el-icon-lock"></span>
-                        </el-col>
-                        <el-col :span="22">
-                            <el-input
-                                    class="inps"
-                                    type="password"
-                                    placeholder="密码"
-                                    v-model="loginForm.passWord"
-                            ></el-input>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-                <el-form-item style="margin-top: 55px">
-                    <el-button type="primary" round class="submitBtn" @click="submitForm">登录
-                    </el-button>
-                </el-form-item>
-                <div class="unlogin">
-                    <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
-                    |
-                    <router-link :to="{ path: '/register' }">
-                        <a href="register.vue" target="_blank" align="right">注册新账号</a>
-                    </router-link>
-                </div>
-            </el-form>
-        </div>
+    <div id="building" class="loginContainer">
+        <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" class="formStyle">
+            <el-form-item label="账号" prop="username" class="label" >
+                <el-input v-model="ruleForm.username" type="text" autocomplete="off" />
+            </el-form-item>
+            <el-form-item label="密码" prop="password" class="label">
+                <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
+            </el-form-item>
+            <el-form-item>
+                <el-button  type="primary" @click="$event => Login()">登录</el-button>
+                <el-button  @click="$event => resetForm()">重置</el-button>
+            </el-form-item>
+            <div class="unlogin">
+                <router-link :to="{ path: '/forgetpwd' }"> 忘记密码? </router-link>
+                |
+                <router-link :to="{ path: '/register' }">
+                    <a href="register.vue" target="_blank" align="right">注册新账号</a>
+                </router-link>
+            </div>
+        </el-form>
     </div>
 </template>
 
-<script>
-import { mapMutations } from "vuex";
+<script lang="ts">
+import { defineComponent, ref, reactive} from "vue";
+import router from "@/router";
+// import { adminLoginApi } from "../../utils/request/api";
+// import Cookie from "js-cookie";
+import axios from "axios";
 
-export default {
-    name: "Login",
-    data: function () {
-        return {
-            loginForm: {
-                account: "",
-                passWord: "",
-            },
-            loginRules: {
-                account: [{ required: true, message: "请输入账号", trigger: "blur" }],
-                passWord: [{ required: true, message: "请输入密码", trigger: "blur" }],
-            },
+
+
+
+export default defineComponent ({
+    name: 'HelloWorld',
+    setup() {
+        // 表单数据
+        let ruleForm = reactive({
+            username: "",
+            password: "",
+        });
+        // 获取el-form组件对象， 名称和表单绑定的ref一样，他们会自动关联。
+        let ruleFormRef = ref();
+
+        // 校验密码的函数  传3个参数，并对参数利用ts进行类型约束
+        // 进行类型约束  rule的类型不确定，就用unknown; 密码放在输入框，类型为string
+        // 函数， 里面有一个string类型的参数，是可选的。
+        const validatePassword = (
+            rule: unknown,
+            value: string | undefined,
+            callback: (msg?: string) => void
+        ) => {
+            // 判断vaLue是否为空，如果vaLue不存在，那么提示内容。
+
+            if (!value) {
+                callback("密码不能为空!");
+            } else {
+                // 如果不为空，就直接调用函数不提示内容。
+                //由于上面定义函数的参数是可选的，所以调用函数的时候可以不添加参数
+                callback();
+            }
         };
-    },
+        // 校验规则
+        const rules = reactive({
 
-    methods: {
-        ...mapMutations(["changeLogin"]),
-        submitForm() {
-            const userAccount = this.loginForm.account;
-            const userPassword = this.loginForm.passWord;
-            if (!userAccount) {
-                return this.$message({
-                    type: "error",
-                    message: "账号不能为空！",
+            username: [
+                // message: 如果没有填写username,就会提示文字内容
+                { required: true, message: "用户名不能为空！", trigger: "blue" },
+            ],
+            password: [
+                { required: true, validator: validatePassword, trigger: "blue" },
+                { min: 5, max: 10, message: '密码长度在 5 到 10 个字符', trigger: 'blur' }
+            ],
+        });
+
+
+        //重置表单函数
+        const resetForm = () => {
+            ruleForm.username = "";
+            ruleForm.password = "";
+        };
+
+        // 登录按钮操作
+        const Login = () => {
+
+            // 登录触发校验规则
+            // 由于ruleFormRef是通过ref定义的，操作他需要利用.value
+            // validate是element plus 中from表单方法，获取到from表单以后就可以直接调用了。
+            ruleFormRef.value
+                .validate()
+                .then(() => {
+                    // console.log("表单校验通过");
+                    axios
+                        .post("/login",{
+                            username: ruleForm.username,
+                            password: ruleForm.password,
+                        })
+                        .then((res) => {
+                            console.log(res.data);
+                            let username = res.data.tData.username;
+                            console.log("username：",username);
+                            let status = res.data.status
+                            if (status === 200) {
+                                sessionStorage.setItem("username",res.data.tData.username)
+                                sessionStorage.setItem("token",res.data.tData.token)
+                                router.push({path:'/sx_info_sync'});
+                            } else {
+                                // 调用重置表单函数
+                                resetForm()
+                                alert("登录失败,请检查用户名或密码是否正确！");
+                                // console.log("登录失败，token值：", token);
+                            }
+
+                        });
+                })
+                .catch(() => {
+                    // console.log("表单校验异常");
+                    // alert("表单校验异常");
                 });
-            }
-            if (!userPassword) {
-                return this.$message({
-                    type: "error",
-                    message: "密码不能为空！",
-                });
-            }
-            this.$router.push({path:'/sx_info_sync'})
+        };
 
-            console.log("用户输入的账号为：", userAccount);
-            console.log("用户输入的密码为：", userPassword);
+        return {resetForm, ruleForm, ruleFormRef, rules, Login};
 
-        },
     },
-};
+});
+
+
 </script>
 
 <style>
 
- #building {
-     background: url("../assets/images/bg5.jpg");
-     width: 100%;
-     height: 100%;
-     position: fixed;
-     background-size: 100% 100%;
- }
-.login {
+#building {
+    background: url("../assets/images/bg5.jpg");
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-size: 100% 100%;
+}
+.loginContainer {
     width: 100%;
     padding: 0;
     margin: 0;
@@ -116,7 +150,7 @@ export default {
     position: relative;
 }
 
-.mylogin {
+.formStyle {
     width: 20%;
     height: 60%;
     position: absolute;
@@ -129,19 +163,11 @@ export default {
     box-shadow: -15px 15px 15px rgba(6, 17, 47, 0.7);
     opacity: 1;
     background: linear-gradient(
-    230deg,
-    rgba(53, 57, 74, 0) 0%,
-    rgb(0, 0, 0) 100%
+            230deg,
+            rgba(53, 57, 74, 0) 0%,
+            rgb(0, 0, 0) 100%
     );
 }
-
-.inps input {
-    border: none;
-    color: #000000;
-    background-color: transparent;
-    font-size: 12px;
-}
-
 
 .submitBtn {
     background-color: transparent;
