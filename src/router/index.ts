@@ -159,18 +159,17 @@ const routes: Array<RouteRecordRaw> = [
 
                 ]
             },
-            // {
-            //     path: "/user",
-            //     name: "用户",
-            //     // icon: "User",
-            //     component: () => import('../layout/user.vue'),
-            //     children: [
-            //         {
-            //             path: "list",
-            //             name: "用户列表",
-            //             icon: "UserFilled",
-            //             component: userList
-            //         },
+            {
+                path: "/user",
+                name: "用户",
+                // icon: "User",
+                // component: () => import('../layout/user.vue'),
+                children: [
+                    {
+                        path: "/userlist",
+                        name: "用户列表",
+                        component: () => import('../views/user/user.vue'),
+                    },
             //         {
             //             path: "reset-password",
             //             name: "密码重置",
@@ -209,8 +208,8 @@ const routes: Array<RouteRecordRaw> = [
             //             icon: "Link",
             //             component: friendLink
             //         }
-            //     ]
-            // }
+                ]
+            }
         ]
     },
     // 404
@@ -244,7 +243,7 @@ router.beforeEach((to, from, next) => {
             // }else {
                 alert('请先进行登录！')
                 next({
-                    path:'/login_new',
+                    path:'/login',
                     query: {redirect: to.fullPath}
                 })
             // }
@@ -254,7 +253,7 @@ router.beforeEach((to, from, next) => {
         next();
     }
     /*如果本地 存在 token 则 不允许直接跳转到 登录页面*/
-    if(to.fullPath === "/login_new"){
+    if(to.fullPath === "/login"){
         if(sessionStorage.getItem('token')){
             alert('您已经登录了，如果想要登录其他账号，请先退出当前账号！')
             next({

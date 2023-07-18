@@ -102,7 +102,17 @@
                 <router-view></router-view>
             </el-main>
             <el-footer style="--el-footer-height: auto;">
-                <Footer></Footer>
+                <div>
+                    <el-divider></el-divider>
+                    <span>法律声明</span>
+                    <el-divider direction="vertical"></el-divider>
+                    <span>友情链接</span>
+                    <el-divider direction="vertical"></el-divider>
+                    <span>联系我：123@163.com</span>
+                    <br/>
+                    <br/>
+                    <span>版权所有 JEmbrace</span>
+                </div>
             </el-footer>
             </el-container>
         </el-container>
@@ -112,9 +122,8 @@
 <script>
 import axios from "axios";
 import {ElemeFilled, Location} from "@element-plus/icons-vue";
-import Footer from '@/layout/footer.vue'  // 导入页脚
 export default {
-    components: {Location, ElemeFilled, Footer},
+    components: {Location, ElemeFilled},
     data () {
         return {
             // 左侧菜单数据对象
@@ -208,7 +217,8 @@ export default {
 </script>
 <style lang="less" scoped>
 .home_container {
-    height: 100%;
+    //height: 100%;
+    height: 100vh;
 }
 .el-header {
     background-color: #363d40;
